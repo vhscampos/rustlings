@@ -1,7 +1,7 @@
 // result1.rs
 // Make this test pass! Execute `rustlings hint result1` for hints :)
 
-// I AM NOT DONE
+use std::cmp::Ordering;
 
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
@@ -14,7 +14,11 @@ enum CreationError {
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-        Ok(PositiveNonzeroInteger(value as u64))
+        match value.cmp(&0) {
+            Ordering::Greater => Ok(PositiveNonzeroInteger(value as u64)),
+            Ordering::Equal => Err(CreationError::Zero),
+            Ordering::Less => Err(CreationError::Negative)
+        }
     }
 }
 
